@@ -34,4 +34,10 @@ class CityscapesUtils:
 
 
     def label2color(self, mask: np.array) -> np.array:
+        """Given the cityscapes mask with all training id(and optionally 255 for ignored labels) as labels, returns the mask
+        filled with the label's standard color.
+        :param mask: np.array mask for which color mapping is required
+        :return: mask with labels replaced with their standard colors"""
+
+
         return self.train_id2color[mask]
