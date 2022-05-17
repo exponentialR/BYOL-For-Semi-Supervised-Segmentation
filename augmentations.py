@@ -14,7 +14,7 @@ def get_tfms() -> Tuple:
     """
 
     base_size = 800
-    min_size, max_size = int(0, 5 * base_size), int(2.0 * base_size)
+    min_size, max_size = int(0.5 * base_size), int(2.0 * base_size)
     image_transforms = {'train': tfms.Compose([RandomResize(min_size, max_size),
                                                tfms.RandomCrop(size=768, pad_if_needed=True, fill=0),
                                                tfms.RandomHorizontalFlip(p=0.5),
