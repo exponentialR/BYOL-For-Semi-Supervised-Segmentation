@@ -1,6 +1,5 @@
 from typing import List, Tuple
 import numpy as np
-import default_param
 import matplotlib.pyplot as plt
 import math
 import torch
@@ -9,7 +8,7 @@ from pathlib import Path
 from datautils import CityscapesUtils
 
 dirname = Path(__file__).parents[1].resolve()
-outdir = dirname / "semi-seg" / "outputs"
+outdir = dirname / "semiseg" / "outputs"
 
 outdir.mkdir(parents=True, exist_ok=True)
 cityscape_utils = CityscapesUtils()

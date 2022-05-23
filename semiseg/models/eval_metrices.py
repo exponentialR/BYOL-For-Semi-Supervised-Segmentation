@@ -3,7 +3,8 @@ import numpy as np
 import torch.nn.functional as F
 import default_param
 
-def get_confusion_matrix(output: torch.Tensor, target: torch.Tensor)-> np.ndarray:
+
+def get_confusion_matrix(output: torch.Tensor, target: torch.Tensor) -> np.ndarray:
     """
 
     :param output: output logits
@@ -17,6 +18,7 @@ def get_confusion_matrix(output: torch.Tensor, target: torch.Tensor)-> np.ndarra
     hist = fast_hist(pred.flatten(), target.flatten(), n_classes)
     return hist
 
+
 def mIOU(c_matrix: np.ndarray) -> float:
     """
     calculates the mIOU for a given confusion matrix
@@ -29,7 +31,8 @@ def mIOU(c_matrix: np.ndarray) -> float:
     m_iou = np.nanmean(class_iu)
     return m_iou
 
-def fast_hist(pred: torch.Tensor, label:torch.Tensor, n:int) -> np.ndarray:
+
+def fast_hist(pred: torch.Tensor, label: torch.Tensor, n: int) -> np.ndarray:
     """
 
     :param pred: softmax-applied prediction of shape[N, H, W]
@@ -38,16 +41,18 @@ def fast_hist(pred: torch.Tensor, label:torch.Tensor, n:int) -> np.ndarray:
     :return: a  square matrix where row i represents the count of each class in prediction when the actual class of label is i
 
     """
-    k = (label >=0) & (label < n)
-    return np.bincount(n * label[k].astype(int) + pred[k], minlength = n**2).reshape(n,n)
+    k = (label >= 0) & (label < n)
+    return np.bincount(n * label[k].astype(int) + pred[k], minlength=n ** 2).reshape(n, n)
 
-def per_class_iu(hist:np.ndarray) -> np.array:
+
+def per_class_iu(hist: np.ndarray) -> np.array:
     """
 
     :param hist: bin count matrix of size CxC where C is the no of output classes
     :return: list of IOU per each class
     """
-    return np.diag(hist)/(hist.sum(1) + hist.sum(0) - np.diag(hist))
+    return np.diag(hist) / (hist.sum(1) + hist.sum(0) - np.diag(hist))
+
 
 def pixel_accuracy(output: torch.Tensor, target: torch.Tensor) -> float:
     """
@@ -57,12 +62,11 @@ def pixel_accuracy(output: torch.Tensor, target: torch.Tensor) -> float:
     :return:
     """
     softmax_out = F.softmax(output, dim=1)
-    pred= torch.argmax(softmax_out, dim =1).squeeze(1)
+    pred = torch.argmax(softmax_out, dim=1).squeeze(1)
     pred = pred.view(1, -1)
     target = target.view(1, -1)
     correct = pred.eq(target)
-    correct = correct[target!=default_param.CITYSCAPES_IGNORED_INDEX]
+    correct = correct[target != default_param.CITYSCAPES_IGNORED_INDEX]
     correct = correct.view(-1)
-    score = correct.float().sum(0) /correct.size(0)
+    score = correct.float().sum(0) / correct.size(0)
     return score.item()
-

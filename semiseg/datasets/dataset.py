@@ -57,17 +57,17 @@ class CityscapesDataset(Dataset):
         :param mask: PIL segmentation Mask
         :return: Transformed Image and Mask pair after applying exactly the same random transformations on image and mask
         """
-        seed = np.random.randint(2147483647) #sample a random seed
-        random.seed(seed)           #set this seed to random and numpy.random function
+        seed = np.random.randint(2147483647)  # sample a random seed
+        random.seed(seed)  # set this seed to random and numpy.random function
         np.random.seed(seed)
-        torch.manual_seed(seed)        #Needed for torchvision 0.7
+        torch.manual_seed(seed)  # Needed for torchvision 0.7
         if self.transform is not None:
             image = self.transform(image)
 
         if mask is not None and self.target_transform is not None:
-            random.seed(seed)           #set the same seed to random and numpy.random function
+            random.seed(seed)  # set the same seed to random and numpy.random function
             np.random.seed(seed)
-            torch.manual_seed(seed)     #Needed for torchvision 0.7
+            torch.manual_seed(seed)  # Needed for torchvision 0.7
             mask = self.target_transform(mask)
         return image, mask, seed
 
@@ -92,4 +92,3 @@ class CityscapesDataset(Dataset):
                 mask = Image.open(mask_path)
                 image, mask, seed = self._apply_transformations(image, mask)
             return image if self.isTestSet else (image, mask)
-

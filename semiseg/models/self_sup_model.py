@@ -7,15 +7,17 @@ import copy
 import random
 
 from base import Model
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 class SelfSupervisedModel(Model):
     def __init__(self, network: torch.nn.Module,
                  dataloader: torch.utils.data.DataLoader,
                  optimizer: torch.optim,
-                 criterion: Callable= None,
+                 criterion: Callable = None,
                  lr_scheduler: torch.optim.lr_scheduler = None,
-                 additional_identifier: str=''):
+                 additional_identifier: str = ''):
         super().__init__(network, dataloader, optimizer, criterion, lr_scheduler, additional_identifier)
         self.metrics = []
         if criterion is None:
@@ -23,7 +25,7 @@ class SelfSupervisedModel(Model):
 
     def train(self, num_epochs: int):
         since = time.time()
-        losses = {'train': [], 'val':[]}
+        losses = {'train': [], 'val': []}
         stats = {'train': [], 'val': []}
         lr_rates = []
         best_epoch, best_stat = None, float('inf')
@@ -77,9 +79,9 @@ class SelfSupervisedModel(Model):
 
             self.log_stats(epoch, losses)
 
-            if (epoch + 1) % 30 == 0: #checkpoint model every 30 epochs
+            if (epoch + 1) % 30 == 0:  # checkpoint model every 30 epochs
                 torch.save(self.network.state_dict(), self.weights_file_name)
-                torch.save(best_model_weights, self.weights_file_name.split('.')[0]+'_best.h5')
+                torch.save(best_model_weights, self.weights_file_name.split('.')[0] + '_best.h5')
                 print('model checkpointed to ', self.weights_file_name)
 
             if self.lr_scheduler is not None:

@@ -14,6 +14,7 @@ logs_dir = dirname / "tensorboard_logs"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
+
 class Model:
     """
     Base class for training and evaluation of any network
@@ -178,8 +179,8 @@ class Model:
             imgs, network_outputs, targets = data
             _, preds = torch.max(network_outputs, dim=1)
             val_results = training_utils.plot_images(imgs[:4], targets[:4], preds[:4],
-                                            title='val_mIOU' + str(stats['val'][epoch][0]),
-                                            num_cols=3)
+                                                     title='val_mIOU' + str(stats['val'][epoch][0]),
+                                                     num_cols=3)
             self.writer.add_figure('val_epoch' + str(epoch), val_results)
 
     def add_text_to_tensorboard(self, text: str) -> None:
@@ -224,4 +225,3 @@ class Model:
     def save_weights(self) -> None:
         """ Save current model state dict int self.weights_file_name """
         torch.save(self.network.state_dict(), self.weights_file_name)
-
