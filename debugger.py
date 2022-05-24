@@ -1,7 +1,7 @@
 import torch
 import torchvision
 import numpy as np
-import pathlib
+from pathlib import Path
 
 import default_param
 
