@@ -70,7 +70,7 @@ class CityscapesLoader:
 
         data = self.cityscapes if mode == 'supervised' else self.cityscapes['self-supervised']
 
-        cityscapes_loader = {x: torch.utils.data.DataLoader(data[x], batch_size=batcg_size,
+        cityscapes_loader = {x: torch.utils.data.DataLoader(data[x], batch_size=batch_size,
                                                             sampler=RandomSampler(data[x]) if x == 'train'
                                                             else SequentialSampler(data[x]),
                                                             drop_last=bool(mode == 'supervised' and x == 'train'),
