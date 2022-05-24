@@ -5,7 +5,7 @@ import math
 import torch
 from pathlib import Path
 
-from datautils import CityscapesUtils
+from semiseg.datasets.datautils import CityscapesUtils
 
 dirname = Path(__file__).parents[1].resolve()
 outdir = dirname / "semiseg" / "outputs"

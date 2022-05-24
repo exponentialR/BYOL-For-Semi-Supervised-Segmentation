@@ -3,8 +3,8 @@ import torch
 from torchvision import transforms as tfms
 from torchvision.transforms import RandomApply, RandomGrayscale
 
-from datautils import CityscapesUtils
-from transforms import RandomResize
+from .datautils import CityscapesUtils
+from .transforms import RandomResize
 from PIL import Image
 import numpy as np
 

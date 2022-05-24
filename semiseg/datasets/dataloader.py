@@ -4,7 +4,7 @@ import torch
 from torchvision import datasets
 from torch.utils.data.sampler import SequentialSampler, RandomSampler
 from default_param import CITYSCAPES_PATH, batch_size, num_workers
-from dataset import CityscapesDataset
+from semiseg.datasets.dataset import CityscapesDataset
 from augmentations import get_tfms, get_self_supervised_tfms
 
 
