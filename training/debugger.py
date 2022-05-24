@@ -1,6 +1,4 @@
 import torch
-import torchvision
-import numpy as np
 from pathlib import Path
 
 import default_param
